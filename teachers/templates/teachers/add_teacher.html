@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Add Teacher{% endblock %}
+
+{% block page_title %}
+Add Teacher
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.card{
+    background:white;
+    max-width:700px;
+    margin:auto;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);
+}
+
+input,
+select{
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border:1px solid #ccc;
+    border-radius:5px;
+    box-sizing:border-box;
+}
+
+.btn{
+    margin-top:20px;
+    background:#2e7d32;
+    color:white;
+    padding:12px 20px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.btn:hover{
+    background:#1b5e20;
+}
+
+</style>
+
+<div class="card">
+
+<h2>Add Teacher</h2>
+
+<form method="POST">
+
+{% csrf_token %}
+
+{{ form.as_p }}
+
+<button class="btn" type="submit">
+Save Teacher
+</button>
+
+</form>
+
+</div>
+
+{% endblock %}

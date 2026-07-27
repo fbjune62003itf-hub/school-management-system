@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Add Attendance{% endblock %}
+
+{% block page_title %}
+Add Attendance
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.card{
+    background:white;
+    max-width:700px;
+    margin:auto;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);
+}
+
+input,
+select{
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+.btn{
+    margin-top:20px;
+    background:#2e7d32;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+</style>
+
+<div class="card">
+
+<h2>Edit Attendance Record</h2>
+
+<form method="POST">
+
+{% csrf_token %}
+
+{{ form.as_p }}
+
+<button class="btn" type="submit">
+Update Attendance
+</button>
+
+</form>
+
+</div>
+
+{% endblock %}

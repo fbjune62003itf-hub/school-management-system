@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block title %}Announcements{% endblock %}
+
+{% block page_title %}
+📢 Announcements
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.top-bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.add-btn{
+    background:#2e7d32;
+    color:white;
+    padding:10px 18px;
+    text-decoration:none;
+    border-radius:6px;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.add-btn:hover{
+    background:#1b5e20;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#2e7d32;
+    color:white;
+    padding:12px;
+    text-align:center;
+}
+
+td{
+    padding:12px;
+    border-bottom:1px solid #ddd;
+    text-align:center;
+}
+
+.action-btn{
+    display:inline-block;
+    padding:8px 14px;
+    border-radius:5px;
+    color:white;
+    text-decoration:none;
+    font-size:14px;
+    margin:2px;
+}
+
+.edit-btn{
+    background:#1976d2;
+}
+
+.edit-btn:hover{
+    background:#0d47a1;
+}
+
+.delete-btn{
+    background:#d32f2f;
+}
+
+.delete-btn:hover{
+    background:#b71c1c;
+}
+
+</style>
+
+<div class="top-bar">
+
+<h2>📢 Announcement List</h2>
+
+<a href="{% url 'announcement-add' %}" class="add-btn">
+➕ Add Announcement
+</a>
+
+</div>
+
+<div class="card">
+
+<table>
+
+<tr>
+    <th>📌 Title</th>
+    <th>🎯 Audience</th>
+    <th>📅 Date</th>
+    <th>⚙️ Actions</th>
+</tr>
+
+{% for announcement in announcements %}
+
+<tr>
+
+<td>{{ announcement.title }}</td>
+
+<td>{{ announcement.audience }}</td>
+
+<td>{{ announcement.created_at|date:"d M Y" }}</td>
+
+<td>
+
+<a href="{% url 'announcement-edit' announcement.id %}" class="action-btn edit-btn">
+✏️ Edit
+</a>
+
+<a href="{% url 'announcement-delete' announcement.id %}" class="action-btn delete-btn">
+🗑️ Delete
+</a>
+
+</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+
+<td colspan="4">
+No announcements available.
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+{% endblock %}

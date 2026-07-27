@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+
+{% block title %}Subjects{% endblock %}
+
+{% block page_title %}
+Subjects
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+    margin-bottom:20px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#0b8a3b;
+    color:white;
+    padding:12px;
+    text-align:center;
+}
+
+td{
+    padding:12px;
+    text-align:center;
+    border-bottom:1px solid #ddd;
+}
+
+.btn{
+    background:#0b8a3b;
+    color:white;
+    padding:10px 18px;
+    border:none;
+    border-radius:5px;
+    text-decoration:none;
+}
+
+.edit{
+    background:#1976d2;
+    color:white;
+    padding:6px 12px;
+    border-radius:4px;
+    text-decoration:none;
+}
+
+.delete{
+    background:#d32f2f;
+    color:white;
+    padding:6px 12px;
+    border-radius:4px;
+    text-decoration:none;
+}
+
+input{
+    padding:10px;
+    width:250px;
+}
+
+</style>
+
+<div class="card">
+
+<form method="GET">
+
+<label><strong>Search</strong></label><br><br>
+
+<input
+type="text"
+name="search"
+placeholder="Search Subject"
+value="{{ search }}">
+
+<button class="btn" type="submit">
+Filter
+</button>
+
+<a href="{% url 'subject-list' %}" class="btn">
+Reset
+</a>
+
+<a href="{% url 'add-subject' %}" class="btn">
++ Add Subject
+</a>
+
+</form>
+
+</div>
+
+<div class="card">
+
+<table>
+
+<thead>
+
+<tr>
+<th>Subject</th>
+<th>Teacher</th>
+<th>Actions</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for subject in subjects %}
+
+<tr>
+
+<td>{{ subject.subject_name }}</td>
+
+<td>
+{% if subject.teacher %}
+{{ subject.teacher }}
+{% else %}
+Not Assigned
+{% endif %}
+</td>
+
+<td>
+
+<a href="{% url 'edit-subject' subject.id %}" class="edit">
+Edit
+</a>
+
+<a href="{% url 'delete-subject' subject.id %}" class="delete">
+Delete
+</a>
+
+</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+
+<td colspan="3">
+No subjects found.
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+{% endblock %}

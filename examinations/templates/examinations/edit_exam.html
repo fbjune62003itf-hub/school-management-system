@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Edit Examination</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="id_title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="id_title" name="title" value="{{ exam.title }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="id_subject" class="form-label">Subject</label>
+            <input type="text" class="form-control" id="id_subject" name="subject" value="{{ exam.subject }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="id_date" class="form-label">Date</label>
+            <input type="date" class="form-control" id="id_date" name="date" value="{{ exam.date|date:'Y-m-d' }}" required>
+        </div>
+        <button type="submit" class="btn btn-success">Update Examination</button>
+        <a href="" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

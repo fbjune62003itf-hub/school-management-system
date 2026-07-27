@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Announcement{% endblock %}
+
+{% block page_title %}
+Edit Announcement
+{% endblock %}
+
+{% block content %}
+
+<div class="card">
+
+<h2>Edit Announcement</h2>
+
+<form method="POST">
+
+{% csrf_token %}
+
+{{ form.as_p }}
+
+<button type="submit" class="btn">
+Update Announcement
+</button>
+
+</form>
+
+</div>
+
+<style>
+
+.card{
+    background:white;
+    max-width:700px;
+    margin:auto;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+
+.btn{
+    background:#2e7d32;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.btn:hover{
+    background:#1b5e20;
+}
+
+</style>
+
+{% endblock %}

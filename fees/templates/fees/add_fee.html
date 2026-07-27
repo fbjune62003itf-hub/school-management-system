@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Add Fee Payment</title>
+
+<style>
+
+body{
+    font-family:Arial,sans-serif;
+    background:#e8f5e9;
+    margin:0;
+    padding:30px;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 3px 10px rgba(0,0,0,.15);
+}
+
+h1{
+    color:#2e7d32;
+    margin-bottom:25px;
+}
+
+form p{
+    margin-bottom:18px;
+}
+
+label{
+    font-weight:bold;
+}
+
+input,
+select{
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border:1px solid #ccc;
+    border-radius:5px;
+    box-sizing:border-box;
+}
+
+.btn{
+    display:inline-block;
+    background:#2e7d32;
+    color:white;
+    padding:12px 20px;
+    text-decoration:none;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.btn:hover{
+    background:#1b5e20;
+}
+
+.back{
+    background:#757575;
+    margin-left:10px;
+}
+
+.back:hover{
+    background:#555;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Add Fee Payment</h1>
+
+<form method="POST">
+
+{% csrf_token %}
+
+{{ form.as_p }}
+
+<button type="submit" class="btn">
+Save Payment
+</button>
+
+<a href="{% url 'fee-list' %}" class="btn back">
+Back
+</a>
+
+</form>
+
+</div>
+
+</body>
+</html>

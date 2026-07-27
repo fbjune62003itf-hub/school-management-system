@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Delete Class{% endblock %}
+
+{% block page_title %}
+Delete Class
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.card{
+    max-width:500px;
+    margin:auto;
+    background:white;
+    padding:30px;
+    text-align:center;
+    border-radius:10px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);
+}
+
+.buttons{
+    margin-top:20px;
+    display:flex;
+    justify-content:center;
+    gap:15px;
+}
+
+.btn-danger{
+    background:#d32f2f;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.btn-secondary{
+    background:#777;
+    color:white;
+    padding:12px 20px;
+    border-radius:5px;
+    text-decoration:none;
+}
+
+</style>
+
+<div class="card">
+
+<h2>Delete Class</h2>
+
+<p>
+
+Are you sure you want to delete
+
+<strong>{{ class.class_name }}</strong>?
+
+</p>
+
+<form method="POST">
+
+{% csrf_token %}
+
+<div class="buttons">
+
+<button class="btn-danger" type="submit">
+
+Delete
+
+</button>
+
+<a href="{% url 'class-list' %}" class="btn-secondary">
+
+Cancel
+
+</a>
+
+</div>
+
+</form>
+
+</div>
+
+{% endblock %}

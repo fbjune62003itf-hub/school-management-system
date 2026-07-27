@@ -1,0 +1,214 @@
+{% extends "base.html" %}
+
+{% block title %}Attendance Records{% endblock %}
+
+{% block page_title %}Attendance Records{% endblock %}
+
+{% block content %}
+
+<style>
+.filter-box{
+    background:#fff;
+    padding:20px;
+    border-radius:10px;
+    margin-bottom:20px;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+
+.filter-box form{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+    align-items:end;
+}
+
+.filter-group{
+    display:flex;
+    flex-direction:column;
+}
+
+label{
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+select,
+input[type=date],
+input[type=text]{
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:5px;
+    min-width:180px;
+}
+
+.btn{
+    background:#2e7d32;
+    color:#fff;
+    padding:10px 18px;
+    border:none;
+    border-radius:5px;
+    text-decoration:none;
+    cursor:pointer;
+}
+
+.btn:hover{
+    background:#1b5e20;
+}
+
+.card{
+    background:#fff;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#2e7d32;
+    color:white;
+    padding:12px;
+}
+
+td{
+    padding:10px;
+    border-bottom:1px solid #ddd;
+    text-align:center;
+}
+
+.present{color:green;font-weight:bold;}
+.absent{color:red;font-weight:bold;}
+.late{color:orange;font-weight:bold;}
+
+.edit{
+    background:#1976d2;
+    color:#fff;
+    padding:6px 12px;
+    text-decoration:none;
+    border-radius:4px;
+}
+
+.delete{
+    background:#d32f2f;
+    color:#fff;
+    padding:6px 12px;
+    text-decoration:none;
+    border-radius:4px;
+}
+</style>
+
+<div class="filter-box">
+
+<form method="GET">
+
+<div class="filter-group">
+<label>Class</label>
+
+<select name="class">
+<option value="">All Classes</option>
+
+{% for c in classes %}
+<option value="{{ c.id }}" {% if selected_class == c.id|stringformat:"s" %}selected{% endif %}>
+{{ c.class_name }}
+</option>
+{% endfor %}
+
+</select>
+</div>
+
+<div class="filter-group">
+<label>Date</label>
+
+<input
+type="date"
+name="date"
+value="{{ selected_date }}">
+</div>
+
+<div class="filter-group">
+<label>Student</label>
+
+<input
+type="text"
+name="search"
+placeholder="Admission number or name"
+value="{{ search|default_if_none:'' }}">
+</div>
+
+<button type="submit" class="btn">
+Filter
+</button>
+
+<a href="{% url 'attendance-list' %}" class="btn">
+Reset
+</a>
+
+</form>
+
+</div>
+
+<div class="card">
+
+<table>
+
+<tr>
+<th>Student</th>
+<th>Class</th>
+<th>Date</th>
+<th>Status</th>
+<th>Actions</th>
+</tr>
+
+{% for record in attendance %}
+
+<tr>
+
+<td>{{ record.student }}</td>
+<td>{{ record.school_class }}</td>
+<td>{{ record.date }}</td>
+
+<td>
+
+{% if record.status == "Present" %}
+<span class="present">✅ Present</span>
+
+{% elif record.status == "Absent" %}
+<span class="absent">❌ Absent</span>
+
+{% else %}
+<span class="late">🟡 Late</span>
+
+{% endif %}
+
+</td>
+
+<td>
+
+<a href="{% url 'edit-attendance' record.id %}" class="edit">
+Edit
+</a>
+
+<a href="{% url 'delete-attendance' record.id %}" class="delete">
+Delete
+</a>
+
+</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+<td colspan="5">No attendance records found.</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+{% endblock %}

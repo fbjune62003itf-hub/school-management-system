@@ -1,23 +1,25 @@
-"""
-URL configuration for config project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/6.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path, include
+from django.http import HttpResponseRedirect
+
+
+def home(request):
+    return HttpResponseRedirect("/accounts/login/")
+
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-     path("", include("dashboard.urls")),
+    path("", home),
+    path("admin/", admin.site.urls),
+    path("accounts/", include("accounts.urls")),
+    path("dashboard/", include("dashboard.urls")),
+    path("students/", include("students.urls")),
+    path("teachers/", include("teachers.urls")),
+    path("parents/", include("parents.urls")),
+    path("classes/", include("classes.urls")),
+    path("attendance/", include("attendance.urls")),
+    path("fees/", include("fees.urls")),
+    path("examinations/", include("examinations.urls")),
+    path("subjects/", include("subjects.urls")),
+    path("reports/", include("reports.urls")),
+    path("announcements/", include("announcements.urls")),
 ]

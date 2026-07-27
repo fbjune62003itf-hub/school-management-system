@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block title %}Teachers{% endblock %}
+
+{% block page_title %}
+Teachers
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.top-bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.search-box input{
+    padding:10px;
+    width:280px;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+.btn{
+    background:#2e7d32;
+    color:white;
+    padding:10px 18px;
+    text-decoration:none;
+    border-radius:5px;
+}
+
+.btn:hover{
+    background:#1b5e20;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#2e7d32;
+    color:white;
+    padding:12px;
+}
+
+td{
+    padding:10px;
+    border-bottom:1px solid #ddd;
+}
+
+.edit{
+    background:#1976d2;
+    color:white;
+    padding:6px 12px;
+    border-radius:4px;
+    text-decoration:none;
+}
+
+.delete{
+    background:#d32f2f;
+    color:white;
+    padding:6px 12px;
+    border-radius:4px;
+    text-decoration:none;
+}
+
+</style>
+
+<div class="top-bar">
+
+<form method="GET" class="search-box">
+<input
+type="text"
+name="search"
+placeholder="Search teacher..."
+value="{{ request.GET.search }}">
+</form>
+
+<a href="{% url 'add-teacher' %}" class="btn">
++ Add Teacher
+</a>
+
+</div>
+
+<div class="card">
+
+<table>
+
+<tr>
+<th>Name</th>
+<th>Gender</th>
+<th>Phone</th>
+<th>Email</th>
+<th>Actions</th>
+</tr>
+
+{% for teacher in teachers %}
+
+<tr>
+
+<td>{{ teacher.first_name }} {{ teacher.last_name }}</td>
+<td>{{ teacher.gender }}</td>
+<td>{{ teacher.phone }}</td>
+<td>{{ teacher.email }}</td>
+
+<td>
+
+<a href="{% url 'edit-teacher' teacher.id %}" class="edit">
+Edit
+</a>
+
+<a href="{% url 'delete-teacher' teacher.id %}" class="delete">
+Delete
+</a>
+
+</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+<td colspan="5">
+No teachers found.
+</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+{% endblock %}

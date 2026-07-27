@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Add Score</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="id_student" class="form-label">Student</label>
+            <input type="text" class="form-control" id="id_student" name="student" required>
+        </div>
+        <div class="mb-3">
+            <label for="id_exam" class="form-label">Examination</label>
+            <input type="text" class="form-control" id="id_exam" name="exam" required>
+        </div>
+        <div class="mb-3">
+            <label for="id_score" class="form-label">Score</label>
+            <input type="number" class="form-control" id="id_score" name="score" required>
+        </div>
+        <button type="submit" class="btn btn-success">Save Score</button>
+        <a href="" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

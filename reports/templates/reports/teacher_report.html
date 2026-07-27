@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block title %}Teacher Report{% endblock %}
+
+{% block page_title %}
+Teacher Report
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.print-btn{
+    background:#2e7d32;
+    color:white;
+    border:none;
+    padding:10px 20px;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:15px;
+    margin-bottom:20px;
+}
+
+.print-btn:hover{
+    background:#1b5e20;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#2e7d32;
+    color:white;
+    padding:12px;
+    text-align:center;
+}
+
+td{
+    padding:10px;
+    border-bottom:1px solid #ddd;
+    text-align:center;
+}
+
+@media print{
+
+.print-btn,
+.sidebar,
+.header{
+display:none !important;
+}
+
+.main{
+margin:0 !important;
+}
+
+.card{
+box-shadow:none;
+}
+
+}
+
+</style>
+
+<button onclick="window.print()" class="print-btn">
+🖨️ Print Report
+</button>
+
+<div class="card">
+
+<h2>Teacher Report</h2>
+
+<table>
+
+<tr>
+<th>Employee No.</th>
+<th>Name</th>
+<th>Gender</th>
+<th>Subject</th>
+<th>Phone</th>
+<th>Email</th>
+</tr>
+
+{% for teacher in teachers %}
+
+<tr>
+
+<td>{{ teacher.employee_number }}</td>
+<td>{{ teacher.first_name }} {{ teacher.last_name }}</td>
+<td>{{ teacher.gender }}</td>
+<td>{{ teacher.subject }}</td>
+<td>{{ teacher.phone }}</td>
+<td>{{ teacher.email }}</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+<td colspan="6">No teacher records found.</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+{% endblock %}

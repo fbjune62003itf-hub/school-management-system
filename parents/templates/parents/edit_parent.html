@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Parent{% endblock %}
+
+{% block page_title %}
+Edit Parent
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.card{
+    max-width:700px;
+    margin:auto;
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);
+}
+
+input,
+select,
+textarea{
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+.btn{
+    margin-top:20px;
+    background:#1976d2;
+    color:white;
+    padding:12px 20px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+</style>
+
+<div class="card">
+
+<h2>Edit Parent</h2>
+
+<form method="POST">
+
+{% csrf_token %}
+
+{{ form.as_p }}
+
+<button class="btn" type="submit">
+Update Parent
+</button>
+
+</form>
+
+</div>
+
+{% endblock %}

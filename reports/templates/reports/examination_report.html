@@ -1,0 +1,308 @@
+{% extends "base.html" %}
+
+{% block title %}Examination Report{% endblock %}
+
+{% block page_title %}
+Examination Report
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.filter-box{
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+    margin-bottom:20px;
+}
+
+.filter-box form{
+    display:flex;
+    flex-wrap:wrap;
+    gap:15px;
+    align-items:end;
+}
+
+.filter-group{
+    display:flex;
+    flex-direction:column;
+}
+
+label{
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+select{
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:5px;
+    min-width:180px;
+}
+
+.btn{
+    background:#2e7d32;
+    color:white;
+    border:none;
+    padding:10px 18px;
+    border-radius:5px;
+    cursor:pointer;
+    text-decoration:none;
+}
+
+.btn:hover{
+    background:#1b5e20;
+}
+
+.print-btn{
+    background:#1565c0;
+    color:white;
+    border:none;
+    padding:10px 18px;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.print-btn:hover{
+    background:#0d47a1;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+    margin-top:20px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+}
+
+th{
+    background:#2e7d32;
+    color:white;
+    padding:12px;
+    text-align:center;
+}
+
+td{
+    padding:10px;
+    border-bottom:1px solid #ddd;
+    text-align:center;
+}
+
+.summary{
+    margin-top:25px;
+    background:#f5f5f5;
+    padding:20px;
+    border-radius:8px;
+}
+
+.summary p{
+    margin:8px 0;
+    font-size:16px;
+}
+
+@media print{
+
+.filter-box,
+.print-btn,
+.sidebar,
+.header{
+display:none !important;
+}
+
+.main{
+margin:0 !important;
+}
+
+.card{
+box-shadow:none;
+border:none;
+}
+
+}
+
+</style>
+
+<div class="filter-box">
+
+<form method="GET">
+
+<div class="filter-group">
+
+<label>Class</label>
+
+<select name="class">
+
+<option value="">All Classes</option>
+
+{% for c in classes %}
+
+<option value="{{ c.id }}" {% if selected_class == c.id|stringformat:"s" %}selected{% endif %}>
+{{ c.class_name }}
+</option>
+
+{% endfor %}
+
+</select>
+
+</div>
+
+<div class="filter-group">
+
+<label>Student</label>
+
+<select name="student">
+
+<option value="">All Students</option>
+
+{% for s in students %}
+
+<option value="{{ s.id }}" {% if selected_student == s.id|stringformat:"s" %}selected{% endif %}>
+{{ s.first_name }} {{ s.last_name }}
+</option>
+
+{% endfor %}
+
+</select>
+
+</div>
+
+<div class="filter-group">
+
+<label>Term</label>
+
+<select name="term">
+
+<option value="">All Terms</option>
+
+{% for term in terms %}
+
+<option value="{{ term }}" {% if selected_term == term %}selected{% endif %}>
+{{ term }}
+</option>
+
+{% endfor %}
+
+</select>
+
+</div>
+
+<div class="filter-group">
+
+<label>Academic Year</label>
+
+<select name="year">
+
+<option value="">All Years</option>
+
+{% for year in years %}
+
+<option value="{{ year }}" {% if selected_year == year %}selected{% endif %}>
+{{ year }}
+</option>
+
+{% endfor %}
+
+</select>
+
+</div>
+
+<button class="btn" type="submit">
+🔍 Search
+</button>
+
+<a href="{% url 'examination-report' %}" class="btn">
+Reset
+</a>
+
+<button type="button" onclick="window.print()" class="print-btn">
+🖨️ Print
+</button>
+
+</form>
+
+</div>
+
+<div class="card">
+
+{% if student %}
+
+<h2>Student Examination Report</h2>
+
+<p><strong>Name:</strong> {{ student.first_name }} {{ student.last_name }}</p>
+
+<p><strong>Admission Number:</strong> {{ student.admission_number }}</p>
+
+<p><strong>Class:</strong> {{ student.school_class }}</p>
+
+<p><strong>Academic Year:</strong> {{ selected_year }}</p>
+
+<p><strong>Term:</strong> {{ selected_term }}</p>
+
+{% endif %}
+
+<table>
+
+<tr>
+
+<th>Subject</th>
+<th>Score</th>
+<th>Grade</th>
+<th>Remarks</th>
+
+</tr>
+
+{% for exam in examinations %}
+
+<tr>
+
+<td>{{ exam.subject }}</td>
+
+<td>{{ exam.score }}</td>
+
+<td>{{ exam.grade }}</td>
+
+<td>{{ exam.remarks }}</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+
+<td colspan="4">
+
+No examination records found.
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% if examinations %}
+
+<div class="summary">
+
+<p><strong>Total Score:</strong> {{ total_score }}</p>
+
+<p><strong>Average Score:</strong> {{ average }}</p>
+
+<p><strong>Overall Performance:</strong> {{ overall }}</p>
+
+</div>
+
+{% endif %}
+
+</div>
+
+{% endblock %}

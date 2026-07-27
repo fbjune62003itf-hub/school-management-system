@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Add Student{% endblock %}
+
+{% block page_title %}
+Add Student
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.card{
+    background:white;
+    max-width:700px;
+    margin:auto;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);
+}
+
+label{
+    display:block;
+    margin-top:15px;
+    font-weight:bold;
+}
+
+input,
+select{
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border:1px solid #ccc;
+    border-radius:5px;
+    box-sizing:border-box;
+}
+
+.btn{
+    margin-top:25px;
+    background:#2e7d32;
+    color:white;
+    padding:12px 20px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.btn:hover{
+    background:#1b5e20;
+}
+
+.back{
+    display:inline-block;
+    margin-top:20px;
+    text-decoration:none;
+    color:#2e7d32;
+}
+
+</style>
+
+<div class="card">
+
+<h2>Add New Student</h2>
+
+<form method="POST">
+
+{% csrf_token %}
+
+{{ form.as_p }}
+
+<button type="submit" class="btn">
+Save Student
+</button>
+
+</form>
+
+<a href="{% url 'student-list' %}" class="back">
+← Back to Students
+</a>
+
+</div>
+
+{% endblock %}

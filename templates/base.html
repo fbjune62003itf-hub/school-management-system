@@ -1,0 +1,349 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>{% block title %}School Management System{% endblock %}</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    background:#f4f6f9;
+}
+
+/* Sidebar */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    width:250px;
+    height:100%;
+    background:#1b5e20;
+    overflow-y:auto;
+}
+
+.logo{
+    padding:20px;
+    text-align:center;
+    border-bottom:1px solid rgba(255,255,255,.2);
+}
+
+.logo img{
+    width:90px;
+    height:90px;
+    border-radius:8px;
+    margin-bottom:10px;
+}
+
+.logo h3{
+    color:white;
+    font-size:20px;
+    line-height:1.3;
+    margin:0;
+}
+
+.menu a,
+.dropdown-btn{
+
+    width:100%;
+    display:block;
+    padding:15px 20px;
+
+    color:white;
+    text-decoration:none;
+    background:none;
+    border:none;
+
+    text-align:left;
+    cursor:pointer;
+    font-size:15px;
+}
+
+.menu a:hover,
+.dropdown-btn:hover{
+
+    background:#2e7d32;
+}
+
+.dropdown-container{
+
+    display:none;
+    background:#256d27;
+}
+
+.dropdown-container a{
+
+    padding-left:45px;
+    font-size:14px;
+}
+
+/* Main */
+
+.main{
+
+    margin-left:250px;
+}
+
+.header{
+
+    background:white;
+    padding:18px 30px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.content{
+
+    padding:30px;
+}
+
+.active{
+
+    display:block;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<div class="logo">
+    <img src="{% static 'images/logo.png' %}" alt="Franco School Logo">
+    <h3>Franco School<br>Management</h3>
+</div>
+
+<div class="menu">
+
+<a href="/dashboard/admin/">🏠 Dashboard</a>
+
+<!-- Students -->
+
+<button class="dropdown-btn">
+👨‍🎓 Students ▼
+</button>
+
+<div class="dropdown-container">
+
+<a href="/students/">View Students</a>
+
+{% if request.user.user_type == "admin" %}
+<a href="/students/add/">Add Student</a>
+{% endif %}
+
+</div>
+
+<!-- Teachers -->
+
+{% if request.user.user_type == "admin" %}
+
+<button class="dropdown-btn">
+👩‍🏫 Teachers ▼
+</button>
+
+<div class="dropdown-container">
+
+<a href="/teachers/">View Teachers</a>
+
+<a href="/teachers/add/">Add Teacher</a>
+
+</div>
+
+{% endif %}
+
+<!-- Parents -->
+
+{% if request.user.user_type == "admin" %}
+
+<button class="dropdown-btn">
+👪 Parents ▼
+</button>
+
+<div class="dropdown-container">
+
+<a href="/parents/">View Parents</a>
+
+<a href="/parents/add/">Add Parent</a>
+
+</div>
+
+{% endif %}
+
+<!-- Classes -->
+
+{% if request.user.user_type == "admin" %}
+
+<button class="dropdown-btn">
+🏫 Classes ▼
+</button>
+
+<div class="dropdown-container">
+
+<a href="/classes/">View Classes</a>
+
+<a href="/classes/add/">Add Class</a>
+
+</div>
+
+{% endif %}
+
+<!-- Attendance -->
+
+<button class="dropdown-btn">
+📝 Attendance ▼
+</button>
+
+<div class="dropdown-container">
+
+<a href="/attendance/take/">Take Attendance</a>
+
+<a href="/attendance/">Attendance Records</a>
+
+</div>
+
+<!-- Fees -->
+
+{% if request.user.user_type == "admin" %}
+
+<button class="dropdown-btn">
+💰 School Fees ▼
+</button>
+
+<div class="dropdown-container">
+
+<a href="/fees/">Fee Records</a>
+
+<a href="/fees/add/">Add Payment</a>
+
+</div>
+
+{% endif %}
+
+<!-- Examinations -->
+
+<button class="dropdown-btn">
+📚 Examinations ▼
+</button>
+
+<div class="dropdown-container">
+
+<a href="/examinations/">Results</a>
+
+<a href="/examinations/add/">Add Result</a>
+
+</div>
+
+<!-- Subjects -->
+
+{% if request.user.user_type == "admin" %}
+
+<button class="dropdown-btn">
+📖 Subjects ▼
+</button>
+
+<div class="dropdown-container">
+
+<a href="/subjects/">📋 View Subjects</a>
+
+<a href="/subjects/add/">➕ Add Subject</a>
+
+</div>
+
+{% endif %}
+
+<!-- Reports -->
+
+{% if request.user.user_type == "admin" %}
+<a href="/reports/">📊 Reports</a>
+{% endif %}
+
+<!-- Announcements -->
+
+<a href="/announcements/">📢 Announcements</a>
+
+<!-- Logout -->
+
+<a href="/accounts/logout/">🚪 Logout</a>
+
+</div>
+
+</div>
+
+<div class="main">
+
+<div class="header">
+
+<h2>
+{% block page_title %}
+Dashboard
+{% endblock %}
+</h2>
+
+<div>
+
+<strong>
+{{ request.user.username }} ({{ request.user.user_type }})
+</strong>
+
+</div>
+
+</div>
+
+<div class="content">
+
+{% block content %}
+{% endblock %}
+
+</div>
+
+</div>
+
+<script>
+
+var dropdown=document.getElementsByClassName("dropdown-btn");
+
+for(var i=0;i<dropdown.length;i++){
+
+dropdown[i].addEventListener("click",function(){
+
+this.classList.toggle("open");
+
+var content=this.nextElementSibling;
+
+if(content.style.display==="block"){
+
+content.style.display="none";
+
+}
+
+else{
+
+content.style.display="block";
+
+}
+
+});
+
+}
+
+</script>
+
+</body>
+</html>

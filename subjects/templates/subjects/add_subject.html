@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Add Subject{% endblock %}
+
+{% block page_title %}Add Subject{% endblock %}
+
+{% block content %}
+
+<style>
+
+.card{
+    background:white;
+    max-width:700px;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+
+label{
+    font-weight:bold;
+}
+
+input,
+select{
+    width:100%;
+    padding:10px;
+    margin-bottom:15px;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+.btn{
+    background:#2e7d32;
+    color:white;
+    padding:10px 18px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.btn:hover{
+    background:#1b5e20;
+}
+
+</style>
+
+<div class="card">
+
+<form method="POST">
+
+{% csrf_token %}
+
+{{ form.as_p }}
+
+<button class="btn" type="submit">
+Save Subject
+</button>
+
+</form>
+
+</div>
+
+{% endblock %}

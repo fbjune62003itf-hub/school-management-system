@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Add Announcement{% endblock %}
+
+{% block page_title %}
+Add Announcement
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.card{
+    max-width:700px;
+    margin:auto;
+    background:white;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+
+label{
+    display:block;
+    margin-top:15px;
+    font-weight:bold;
+}
+
+input,
+select,
+textarea{
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border:1px solid #ccc;
+    border-radius:5px;
+    box-sizing:border-box;
+}
+
+textarea{
+    min-height:150px;
+}
+
+.btn{
+    margin-top:20px;
+    background:#2e7d32;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.btn:hover{
+    background:#1b5e20;
+}
+
+</style>
+
+<div class="card">
+
+<h2>Create Announcement</h2>
+
+<form method="POST">
+
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button class="btn" type="submit">
+        Publish Announcement
+    </button>
+
+</form>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Delete Announcement{% endblock %}
+
+{% block page_title %}
+Delete Announcement
+{% endblock %}
+
+{% block content %}
+
+<div class="card">
+
+<h2>Delete Announcement</h2>
+
+<p>
+Are you sure you want to delete
+<strong>{{ announcement.title }}</strong>?
+</p>
+
+<form method="POST">
+
+{% csrf_token %}
+
+<button class="delete-btn">
+Delete
+</button>
+
+<a href="{% url 'announcement-list' %}">
+Cancel
+</a>
+
+</form>
+
+</div>
+
+<style>
+
+.card{
+    background:white;
+    max-width:600px;
+    margin:auto;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+
+.delete-btn{
+    background:red;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+</style>
+
+{% endblock %}
